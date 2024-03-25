@@ -8,6 +8,11 @@ import base64
 
 
 @csrf_exempt
+def test(request):
+    return JsonResponse({"message": "Success!"})
+
+
+@csrf_exempt
 def chat(request):
     if request.method == "POST":
         # Retrieve the audio file from the request
