@@ -1,0 +1,63 @@
+#controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 3rem;
+
+}
+
+button {
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+}
+
+#recordButton {
+  background-color: #4caf50;
+  /* Material Green */
+}
+
+#pauseButton {
+  background-color: #2196f3;
+  /* Material Blue */
+}
+
+#stopButton {
+  background-color: #f44336;
+  /* Material Red */
+}
+
+#chatbot-response {
+  display: block;
+  white-space: pre-wrap;
+  font-family: monospace;
+}
+
+#loader {
+  animation: spin 2s infinite linear;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+#visual-data {
+  display: block;
+  width: 100%;
+}
