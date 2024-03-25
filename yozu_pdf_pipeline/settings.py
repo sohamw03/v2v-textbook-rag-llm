@@ -76,7 +76,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "yozu_pdf_pipeline.wsgi.app"
+WSGI_APPLICATION = "yozu_pdf_pipeline.wsgi.application"
 
 
 # Database
