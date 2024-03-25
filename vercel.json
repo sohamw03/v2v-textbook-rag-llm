@@ -1,0 +1,14 @@
+{
+  "builds": [
+    {
+      "src": "yozu_pdf_pipeline/wsgi.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "yozu_pdf_pipeline/wsgi.py"
+    }
+  ]
+}
