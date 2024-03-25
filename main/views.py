@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from .functions.loadData import loadData
 from .functions.speechToText import speechToText
@@ -9,7 +9,7 @@ import base64
 
 @csrf_exempt
 def test(request):
-    return JsonResponse({"message": "Success!"})
+    return HttpResponse("Success")
 
 
 @csrf_exempt
