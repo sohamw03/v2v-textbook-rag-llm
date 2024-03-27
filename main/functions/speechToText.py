@@ -16,6 +16,11 @@ def speechToText(audio_file):
         subscription=SPEECH_KEY, region=SPEECH_REGION
     )
     speech_config.speech_recognition_language = "en-US"
+    # auto_detect_source_language_config = (
+    #     speechsdk.languageconfig.AutoDetectSourceLanguageConfig(
+    #         languages=["en-US", "mr-IN", "hi-IN"]
+    #     )
+    # )
 
     # Increase initial silence timeout to 5 seconds
     speech_config.set_property(
@@ -32,8 +37,9 @@ def speechToText(audio_file):
     audio_stream.close()
 
     speech_recognizer = speechsdk.SpeechRecognizer(
-        speech_config=speech_config, audio_config=audio_config,
-auto_detect_source_language_config=True
+        speech_config=speech_config,
+        audio_config=audio_config,
+        # auto_detect_source_language_config=auto_detect_source_language_config,
     )
 
     speech_recognition_result = speech_recognizer.recognize_once_async().get()

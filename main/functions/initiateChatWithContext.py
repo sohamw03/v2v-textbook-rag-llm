@@ -11,7 +11,7 @@ querytest = "Didn't understand the point 1.1.1"
 def initiateChatWithContext(context, query):
     user_msg = context + "\n\n" + query
 
-    system_msg = "You are a helpful tution teacher. You teach only from the textbook."
+    system_msg = "You are a ninth grade science teacher. You will explain the concept in simple and clear language such that even a fifth grade student understands."
 
     headers = {
         "Content-Type": "application/json",
