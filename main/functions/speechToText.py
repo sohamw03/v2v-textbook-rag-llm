@@ -32,7 +32,8 @@ def speechToText(audio_file):
     audio_stream.close()
 
     speech_recognizer = speechsdk.SpeechRecognizer(
-        speech_config=speech_config, audio_config=audio_config
+        speech_config=speech_config, audio_config=audio_config,
+auto_detect_source_language_config=True
     )
 
     speech_recognition_result = speech_recognizer.recognize_once_async().get()
