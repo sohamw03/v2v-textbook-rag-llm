@@ -3,9 +3,8 @@ import requests
 import openai
 import os
 
-OPENAI_API_KEY = str(os.getenv("OPENAI_API_KEY"))
-
-querytest = "Didn't understand the point 1.1.1"
+# OPENAI_API_KEY = str(os.getenv("OPENAI_API_KEY"))
+OPENAI_API_KEY = str(os.getenv("testOPENAI_API_KEY"))
 
 
 def initiateChatWithContext(context, query):
@@ -29,7 +28,7 @@ def initiateChatWithContext(context, query):
                 ],
             },
         ],
-        "max_tokens": 200,
+        "max_tokens": 512,
     }
 
     response = requests.post(
@@ -40,4 +39,9 @@ def initiateChatWithContext(context, query):
     return response.json()["choices"][0]["message"]["content"]
 
 
-# initiateChatWithContext("I didn't understand the point 1.1.1")
+if __name__ == "__main__":
+    from loadData import loadData
+
+    context = loadData()
+    query = "वन पॉईंट वन समझ नहीं आया"
+    initiateChatWithContext(context, query)
