@@ -40,8 +40,9 @@ Language: Respond in the same language as the query.
         "https://api.openai.com/v1/chat/completions", headers=headers, json=payload
     )
 
-    print(response.json()["choices"][0]["message"]["content"])
-    return response.json()["choices"][0]["message"]["content"]
+    responseJson = response.json()
+    print(responseJson)
+    return responseJson["choices"][0]["message"]["content"]
 
 
 if __name__ == "__main__":
