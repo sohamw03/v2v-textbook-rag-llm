@@ -8,7 +8,12 @@ OPENAI_API_KEY = str(os.getenv("testOPENAI_API_KEY"))
 
 
 def initiateChatWithContext(context, query):
-    user_msg = context + "\n\n" + query
+    user_msg = f"""Context: {context}
+
+Query: {query}
+
+Language: Respond in the same language as the query.
+"""
 
     system_msg = "You are a ninth grade science teacher. You will explain the concept in simple and clear language such that even a fifth grade student understands."
 
