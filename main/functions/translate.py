@@ -1,4 +1,4 @@
-import requests, hashlib, json, os
+import requests, time, hashlib, json, os
 
 # Add your key and endpoint
 key = str(os.getenv("TRANSLATOR_TEXT_SUBSCRIPTION_KEY"))
