@@ -3,7 +3,6 @@
 """
 
 import azure.cognitiveservices.speech as speechsdk
-from langdetect import detect
 import os
 
 # Creates an instance of a speech config with specified subscription key and service region.
@@ -11,21 +10,27 @@ speech_key = str(os.getenv("SPEECH_KEY"))
 service_region = str(os.getenv("SPEECH_REGION"))
 
 language_voice_mapping = {
-    "en-IN": "en-IN-PrabhatNeural",
-    "hi-IN": "hi-IN-MadhurNeural",
-    "mr-IN": "mr-IN-ManoharNeural",
+    "en": "en-IN-PrabhatNeural",
+    "hi": "hi-IN-MadhurNeural",
+    "mr": "mr-IN-ManoharNeural",
+    "ur": "ur-IN-SalmanNeural",
+    "ta": "ta-IN-ValluvarNeural",
+    "te": "te-IN-MohanNeural",
+    "bn": "bn-IN-BashkarNeural",
 }
 
 
-def textToSpeech(text):
+def textToSpeech(text, userLanguage):
     speech_config = speechsdk.SpeechConfig(
         subscription=speech_key, region=service_region
     )
 
-    source_language = detect(text) + "-IN"
+    source_language = userLanguage
+    voice_name = "hi-IN-MadhurNeural"
     if source_language in language_voice_mapping:
         voice_name = language_voice_mapping[source_language]
-        speech_config.speech_synthesis_voice_name = voice_name
+    print(voice_name)
+    speech_config.speech_synthesis_voice_name = voice_name
 
     # Create a SpeechSynthesizer with the speech config and audio config
     speech_synthesizer = speechsdk.SpeechSynthesizer(
@@ -50,9 +55,9 @@ def textToSpeech(text):
 
 
 if __name__ == "__main__":
-    text = "Hello, how are you doing today?"
+    text = '"मॅटर" हा शब्द लॅटिन शब्द मटेरियलमधून आला आहे, ज्याचा मूळतः प्रकल्पासाठी गोळा केलेल्या लाकडाचा संदर्भ आहे. वस्तुमान आणि आकारमान असलेली किंवा जागा व्यापणारी कोणतीही गोष्ट अशी पदार्थाची व्याख्या केली जाते. उदाहरणार्थ, कार पदार्थापासून बनलेली असते कारण त्यात वस्तुमान आणि व्हॉल्यूम असते.'
 
-    audio = textToSpeech(text)
+    audio = textToSpeech(text, "mr")
     with open("output.wav", "wb") as f:
         f.write(audio)
     print("Audio file saved as output.wav")

@@ -4,6 +4,8 @@ from .functions.loadData import loadData
 from .functions.speechToText import speechToText
 from .functions.initiateChatWithContext import initiateChatWithContext
 from .functions.textToSpeech import textToSpeech
+from .functions.detectLang import detectLang
+from .functions.translate import translate
 import base64
 
 
@@ -21,14 +23,17 @@ def chat(request):
         # Process the audio file
         detectedText = speechToText(audio_file)
         print(detectedText)
+        userLanguage = detectLang(detectedText)
 
         context = loadData()
-
         # Combine the detected text with the context and generate a response
-        chatResponse = initiateChatWithContext(context=context, query=detectedText)
+        chatResponse = initiateChatWithContext(
+            context=context, query=detectedText, userLanguage=userLanguage
+        )
 
         # Process the chat response and convert it to audio
-        outputAudio = textToSpeech(chatResponse)
+        userLangResponse = translate("en", userLanguage, chatResponse)
+        outputAudio = textToSpeech(userLangResponse, userLanguage)
 
         # Return the output audio as a response
         # Convert the bytes data to base64 encoded string
@@ -37,7 +42,7 @@ def chat(request):
         response = JsonResponse(
             {
                 "detectedText": detectedText,
-                "chatResponse": chatResponse,
+                "chatResponse": userLangResponse,
                 "audio": outputAudio_base64,
             },
         )

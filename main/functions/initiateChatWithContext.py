@@ -2,18 +2,21 @@ from openai import OpenAI
 import requests
 import openai
 import os
+from .translate import translate
 
 # OPENAI_API_KEY = str(os.getenv("OPENAI_API_KEY"))
 OPENAI_API_KEY = str(os.getenv("testOPENAI_API_KEY"))
 
 
-def initiateChatWithContext(context, query):
+def initiateChatWithContext(context, query, userLanguage) -> str:
+    query = translate(userLanguage, "en", query)
+
     user_msg = f"""Context: {context}
-
-Query: {query}
-
-Language: Respond in the same language as the query.
-"""
+    
+    Query: {query}
+    
+    Language: English.
+    """
 
     system_msg = "You are a ninth grade science teacher. You will explain the concept in simple and clear language such that even a fifth grade student understands."
 

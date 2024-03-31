@@ -18,7 +18,7 @@ def speechToText(audio_file):
     # speech_config.speech_recognition_language = "en-US"
     auto_detect_source_language_config = (
         speechsdk.languageconfig.AutoDetectSourceLanguageConfig(
-            languages=["en-US", "mr-IN", "hi-IN"]
+            languages=["en-IN", "hi-IN", "mr-IN", "ta-IN"]
         )
     )
 

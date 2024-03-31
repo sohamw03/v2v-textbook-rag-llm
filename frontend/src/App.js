@@ -121,7 +121,7 @@ export default function App() {
     var formData = new FormData();
     formData.append("audio", blob, filename);
 
-    fetch("https://yozu-speech-services.azurewebsites.net/chat", {
+    fetch("http://127.0.0.1:8000/chat", {
       method: "POST",
       body: formData,
     })
@@ -179,6 +179,7 @@ export default function App() {
         </div>
       </div>
       <audio id="output" style={{ display: "none" }} ref={outputAudio}></audio>
+      <audio id="testoutput" controls src="data:audio/wav;base64,"></audio>
     </>
   );
 }
