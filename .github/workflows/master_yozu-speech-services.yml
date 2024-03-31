@@ -66,4 +66,3 @@ jobs:
         with:
           app-name: "yozu-speech-services"
           slot-name: "production"
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_9fd6a79e26b14f69bc123a8e17698372 }}
