@@ -1,4 +1,4 @@
-import requests, uuid, json, os
+import requests, json, os
 
 # Add your key and endpoint
 key = str(os.getenv("TRANSLATOR_TEXT_SUBSCRIPTION_KEY"))
@@ -19,12 +19,13 @@ def translate(from_language, to_language, text):
         "to": [to_language],
     }
 
+    unique_id = hashlib.sha256(str(time.time()).encode()).hexdigest()
     headers = {
         "Ocp-Apim-Subscription-Key": key,
         # location required if you're using a multi-service or regional (not global) resource.
         "Ocp-Apim-Subscription-Region": location,
         "Content-type": "application/json",
-        "X-ClientTraceId": str(uuid.uuid4()),
+        "X-ClientTraceId": unique_id,
     }
 
     # You can pass more than one object in body.
