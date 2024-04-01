@@ -6,6 +6,7 @@ from .functions.initiateChatWithContext import initiateChatWithContext
 from .functions.textToSpeech import textToSpeech
 from .functions.detectLang import detectLang
 from .functions.translate import translate
+from .functions.initiateChatLangchain import initiateChatLangchain
 import base64
 
 
@@ -25,11 +26,12 @@ def chat(request):
         print(detectedText)
         userLanguage = detectLang(detectedText)
 
-        context = loadData()
+        # context = loadData()
         # Combine the detected text with the context and generate a response
-        chatResponse = initiateChatWithContext(
-            context=context, query=detectedText, userLanguage=userLanguage
-        )
+        # chatResponse = initiateChatWithContext(
+        #     context=context, query=detectedText, userLanguage=userLanguage
+        # )
+        chatResponse = initiateChatLangchain(detectedText, userLanguage)
 
         # Process the chat response and convert it to audio
         userLangResponse = translate("en", userLanguage, chatResponse)
