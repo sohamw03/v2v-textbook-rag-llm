@@ -27,8 +27,7 @@ def chatllm(request):
         print(detectedText)
         userLanguage = detectLang(detectedText)
 
-        # chatResponse = initiateChatLangchain(detectedText, userLanguage)
-        chatResponse = initiateChatLangchain("Explain figure 1.1", "en")
+        chatResponse = initiateChatLangchain(detectedText, userLanguage)
 
         # Process the chat response and convert it to audio
         userLangResponse = translate("en", userLanguage, chatResponse)
