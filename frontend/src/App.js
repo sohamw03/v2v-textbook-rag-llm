@@ -9,6 +9,7 @@ export default function App() {
   const [loading, setLoading] = useState(false);
 
   const input = useRef(null);
+  const AudioContext = useRef(null);
   const audioContext = useRef(null);
   const rec = useRef(null);
   const gumStream = useRef(null);
@@ -17,8 +18,6 @@ export default function App() {
   const pauseRef = useRef(null);
   const stopRef = useRef(null);
   const outputAudio = useRef(null);
-
-  let AudioContext;
 
   function startRecording() {
     console.log("recordButton clicked");
@@ -30,7 +29,7 @@ export default function App() {
       .getUserMedia(constraints)
       .then(function (stream) {
         console.log("getUserMedia() success, stream created, initializing Recorder.js ...");
-        audioContext.current = new AudioContext({ sampleRate: 16000 });
+        audioContext.current = new AudioContext.current({ sampleRate: 16000 });
 
         setFormatsData("Format: 1 channel pcm @ " + audioContext.current.sampleRate / 1000 + "kHz");
 
@@ -122,7 +121,7 @@ export default function App() {
     formData.append("audio", blob, filename);
 
     // fetch("https://yozu-speech-services.azurewebsites.net/chat", {
-    fetch("http://127.0.0.1:8000/chat", {
+      fetch("http://127.0.0.1:8000/chat", {
       method: "POST",
       body: formData,
     })
@@ -157,7 +156,7 @@ export default function App() {
   }
 
   useEffect(() => {
-    AudioContext = window.AudioContext || window.webkitAudioContext;
+    AudioContext.current = window.AudioContext || window.webkitAudioContext;
   }, []);
 
   return (

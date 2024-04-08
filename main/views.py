@@ -8,6 +8,7 @@ from .functions.detectLang import detectLang
 from .functions.translate import translate
 from .functions.initiateChatLangchain import initiateChatLangchain
 import base64
+from main.models import Chat
 
 
 @csrf_exempt
@@ -16,7 +17,7 @@ def test(request):
 
 
 @csrf_exempt
-def chat(request):
+def chatllm(request):
     if request.method == "POST":
         # Retrieve the audio file from the request
         audio_file = request.FILES.get("audio")
@@ -26,12 +27,8 @@ def chat(request):
         print(detectedText)
         userLanguage = detectLang(detectedText)
 
-        # context = loadData()
-        # Combine the detected text with the context and generate a response
-        # chatResponse = initiateChatWithContext(
-        #     context=context, query=detectedText, userLanguage=userLanguage
-        # )
-        chatResponse = initiateChatLangchain(detectedText, userLanguage)
+        # chatResponse = initiateChatLangchain(detectedText, userLanguage)
+        chatResponse = initiateChatLangchain("Explain figure 1.1", "en")
 
         # Process the chat response and convert it to audio
         userLangResponse = translate("en", userLanguage, chatResponse)
@@ -56,3 +53,10 @@ def chat(request):
     else:
         # Handle GET requests or other HTTP methods
         return JsonResponse({"message": "This endpoint only supports POST requests."})
+
+
+@csrf_exempt
+def clearHistory(request):
+    if request.method == "POST":
+        Chat.objects.all().delete()
+        return JsonResponse({"message": "Chat history cleared."})
