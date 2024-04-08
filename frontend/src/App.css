@@ -61,3 +61,16 @@ button {
   display: block;
   width: 100%;
 }
+
+#newsession {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  width: 100%;
+  align-items: center;
+}
+
+#newsession>input,
+#newsession>label {
+  cursor: pointer;
+}

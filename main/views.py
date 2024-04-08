@@ -21,13 +21,14 @@ def chatllm(request):
     if request.method == "POST":
         # Retrieve the audio file from the request
         audio_file = request.FILES.get("audio")
+        isNewSession = request.POST.get("isNewSession", 0)
 
         # Process the audio file
         detectedText = speechToText(audio_file)
         print(detectedText)
         userLanguage = detectLang(detectedText)
 
-        chatResponse = initiateChatLangchain(detectedText, userLanguage)
+        chatResponse = initiateChatLangchain(detectedText, userLanguage, int(isNewSession))
 
         # Process the chat response and convert it to audio
         userLangResponse = translate("en", userLanguage, chatResponse)

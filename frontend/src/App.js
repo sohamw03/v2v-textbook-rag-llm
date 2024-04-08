@@ -6,6 +6,7 @@ export default function App() {
   const [pauseButtonData, setPauseButtonData] = useState("Pause");
   const [formatsData, setFormatsData] = useState("Format: start recording to see sample rate");
   const [chatbotResponse, setChatbotResponse] = useState("");
+  const [isNewSession, setIsNewSession] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const input = useRef(null);
@@ -119,9 +120,10 @@ export default function App() {
     //upload link
     var formData = new FormData();
     formData.append("audio", blob, filename);
+    formData.append("isNewSession", isNewSession ? 1 : 0);
 
-    fetch("https://yozu-speech-services.azurewebsites.net/chat", {
-      // fetch("http://127.0.0.1:8000/chat", {
+    // fetch("https://yozu-speech-services.azurewebsites.net/chat", {
+    fetch("http://127.0.0.1:8000/chat", {
       method: "POST",
       body: formData,
     })
@@ -172,6 +174,18 @@ export default function App() {
           {loading ? <LoaderCircle size={16} id="loader" /> : "Stop"}
         </button>
         <div id="formats">{formatsData}</div>
+        <div id="newsession">
+          <label htmlFor="newsessionbtn">New Session</label>
+          <input
+            type="checkbox"
+            name="newsession"
+            id="newsessionbtn"
+            onChange={(e) => {
+              setIsNewSession(e.target.checked);
+            }}
+            value={isNewSession}
+          />
+        </div>
         <div id="visual-data">
           <p>Chatbot Response: </p>
           <p id="chatbot-response">User : {chatbotResponse.user}</p>
