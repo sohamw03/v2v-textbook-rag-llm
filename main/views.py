@@ -7,8 +7,9 @@ from .functions.textToSpeech import textToSpeech
 from .functions.detectLang import detectLang
 from .functions.translate import translate
 from .functions.initiateChatLangchain import initiateChatLangchain
+from .functions.initiateChatDictionaryLangchain import initiateChatDictionaryLangchain
 import base64
-from main.models import Chat
+from main.models import Chat, User
 
 
 @csrf_exempt
@@ -19,6 +20,8 @@ def test(request):
 @csrf_exempt
 def chatllm(request):
     if request.method == "POST":
+        mode = str(User.objects.get(name="admin").mode)
+
         # Retrieve the audio file from the request
         audio_file = request.FILES.get("audio")
         isNewSession = request.POST.get("isNewSession", 0)
@@ -26,13 +29,42 @@ def chatllm(request):
         # Process the audio file
         detectedText = speechToText(audio_file)
         print(detectedText)
+
+        # Check if the detected text contains any mode change commands
+        if "dictionary mode" in detectedText.lower():
+            mode = "dictionary mode"
+            User.objects.filter(name="admin").update(mode="dictionary mode")
+        elif "teacher mode" in detectedText.lower():
+            mode = "teacher mode"
+            User.objects.filter(name="admin").update(mode="teacher mode")
+
+        # Detect the language of the detected text
         userLanguage = detectLang(detectedText)
 
-        chatResponse = initiateChatLangchain(detectedText, userLanguage, int(isNewSession))
+        # Check the mode and initiate the chat accordingly
+        chatResponse = ""
+        if mode == "dictionary mode":
+            chatResponse = initiateChatDictionaryLangchain(detectedText, userLanguage)
+        elif mode == "teacher mode":
+            chatResponse = initiateChatLangchain(
+                detectedText, userLanguage, int(isNewSession)
+            )
 
-        # Process the chat response and convert it to audio
-        userLangResponse = translate("en", userLanguage, chatResponse)
-        outputAudio = textToSpeech(userLangResponse, userLanguage)
+        # Translate the chat response to the user's language
+        userLangResponse = ""
+        outputAudio = b""
+        # Check if the detected text contains any mode change commands
+        if "dictionary mode" in detectedText.lower():
+            outputAudio = textToSpeech("You're in dictionary mode now.", "en")
+            userLangResponse = "You're in dictionary mode now."
+        elif "teacher mode" in detectedText.lower():
+            outputAudio = textToSpeech(
+                "You're in teacher mode now. Please ask a question.", "en"
+            )
+            userLangResponse = "You're in teacher mode now. Please ask a question."
+        else:
+            userLangResponse = translate("en", userLanguage, chatResponse)
+            outputAudio = textToSpeech(userLangResponse, userLanguage)
 
         # Return the output audio as a response
         # Convert the bytes data to base64 encoded string

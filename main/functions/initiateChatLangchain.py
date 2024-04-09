@@ -99,3 +99,4 @@ def initiateChatLangchain(query, userLanguage, isNewSession) -> str:
 
 if __name__ == "__main__":
     print(initiateChatWithContext("फिगर वन पॉईंट वन समझ नहीं आया", "hi"))
+    

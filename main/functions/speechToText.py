@@ -26,6 +26,9 @@ def speechToText(audio_file):
     speech_config.set_property(
         speechsdk.PropertyId.SpeechServiceConnection_InitialSilenceTimeoutMs, "10000"
     )
+    speech_config.set_property(
+        speechsdk.PropertyId.SpeechServiceConnection_EndSilenceTimeoutMs, "10000"
+    )
 
     # this example uses audio streams so there is no need to save the wav files in storage
     audio_stream = speechsdk.audio.PushAudioInputStream()
