@@ -20,7 +20,13 @@ def test(request):
 @csrf_exempt
 def chatllm(request):
     if request.method == "POST":
-        mode = str(User.objects.get(name="admin").mode)
+        admin = ""
+        try:
+            admin = User.objects.get(name="admin")
+        except User.DoesNotExist:
+            admin = User(name="admin", mode="teacher mode")
+            admin.save()
+        mode = str(admin.mode)
 
         # Retrieve the audio file from the request
         audio_file = request.FILES.get("audio")
