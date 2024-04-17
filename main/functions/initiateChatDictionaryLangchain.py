@@ -11,7 +11,7 @@ from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from .translate import translate
 from .prompts import yozu_prompts
 
-os.environ["OPENAI_API_KEY"] = str(os.getenv("testOPENAI_API_KEY"))
+os.environ["OPENAI_API_KEY"] = str(os.getenv("OPENAI_API_KEY"))
 
 
 def initiateChatDictionaryLangchain(query, userLanguage) -> str:

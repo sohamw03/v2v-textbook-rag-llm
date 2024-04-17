@@ -4,9 +4,7 @@ import openai
 import os
 from .translate import translate
 
-# OPENAI_API_KEY = str(os.getenv("OPENAI_API_KEY"))
-OPENAI_API_KEY = str(os.getenv("testOPENAI_API_KEY"))
-
+OPENAI_API_KEY = str(os.getenv("OPENAI_API_KEY"))
 
 def initiateChatWithContext(context, query, userLanguage) -> str:
     query = translate(userLanguage, "en", query)

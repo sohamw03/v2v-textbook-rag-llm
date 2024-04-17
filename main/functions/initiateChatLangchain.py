@@ -17,7 +17,7 @@ from .dbparsers.getParsedChatHistory import getParsedChatHistory
 from main.models import Chat
 from .prompts import yozu_prompts
 
-os.environ["OPENAI_API_KEY"] = str(os.getenv("testOPENAI_API_KEY"))
+os.environ["OPENAI_API_KEY"] = str(os.getenv("OPENAI_API_KEY"))
 CONN_STR = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
 
 blob_service_client = BlobServiceClient.from_connection_string(conn_str=CONN_STR)
