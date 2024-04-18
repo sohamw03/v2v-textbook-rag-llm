@@ -31,14 +31,14 @@ for blob in blob_list:
 
 try:
     # Create the local vectorstore folder (if it doesn't exist)
-    os.makedirs("vectorstore", exist_ok=True)
+    os.makedirs("schand_vectorstore", exist_ok=True)
 
-    for blob in container_client.list_blobs(prefix="NCERT_IX_C1/vectorstore/"):
+    for blob in container_client.list_blobs(prefix="schand_vectorstore/"):
         # Extract the filename from the blob name (assuming simple structure)
         filename = blob.name.split("/")[-1]
         local_path = os.path.join(
-            "vectorstore", filename
-        )  # Path within "vectorstore" folder
+            "schand_vectorstore", filename
+        )  # Path within "schand_vectorstore" folder
 
         blob_client = container_client.get_blob_client(blob.name)
         with open(local_path, "wb") as download_file:
@@ -52,7 +52,7 @@ def initiateChatLangchain(query, userLanguage, isNewSession) -> str:
     query = translate(userLanguage, "en", query)
 
     vectorstore = FAISS.load_local(
-        "vectorstore", OpenAIEmbeddings(), allow_dangerous_deserialization=True
+        "schand_vectorstore", OpenAIEmbeddings(), allow_dangerous_deserialization=True
     )
 
     retriever = vectorstore.as_retriever()
@@ -99,4 +99,3 @@ def initiateChatLangchain(query, userLanguage, isNewSession) -> str:
 
 if __name__ == "__main__":
     print(initiateChatWithContext("फिगर वन पॉईंट वन समझ नहीं आया", "hi"))
-    
