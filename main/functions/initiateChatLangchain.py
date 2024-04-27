@@ -48,14 +48,16 @@ except Exception as ex:
     print(f"Error downloading vectorstore files: {ex}")
 
 
+model = ChatOpenAI(model="gpt-3.5-turbo")
+vectorstore = FAISS.load_local(
+    "schand_vectorstore", OpenAIEmbeddings(), allow_dangerous_deserialization=True
+)
+
+retriever = vectorstore.as_retriever(search_kwargs={"k": 5})
+
+
 def initiateChatLangchain(query, userLanguage, isNewSession) -> str:
     query = translate(userLanguage, "en", query)
-
-    vectorstore = FAISS.load_local(
-        "schand_vectorstore", OpenAIEmbeddings(), allow_dangerous_deserialization=True
-    )
-
-    retriever = vectorstore.as_retriever()
 
     human_template = yozu_prompts["new_session" if isNewSession == 1 else "default"][
         "human_template"
@@ -74,7 +76,6 @@ def initiateChatLangchain(query, userLanguage, isNewSession) -> str:
         ]
     )
 
-    model = ChatOpenAI()
     chain = (
         {
             "context": itemgetter("question") | retriever,  # Context from retriever
@@ -86,7 +87,7 @@ def initiateChatLangchain(query, userLanguage, isNewSession) -> str:
         | model
         | StrOutputParser()
     )
-    # print("VectorSearch :", vectorstore.similarity_search(query))
+    # print("VectorSearch :", retriever.invoke(query))
     chat_history = getParsedChatHistory(Chat.objects.all().order_by("id")[:10])
     print(chat_history)
     output = chain.invoke(
@@ -98,4 +99,4 @@ def initiateChatLangchain(query, userLanguage, isNewSession) -> str:
 
 
 if __name__ == "__main__":
-    print(initiateChatWithContext("फिगर वन पॉईंट वन समझ नहीं आया", "hi"))
+    print(initiateChatLangchain("What is a seed drill ?", "en"))
