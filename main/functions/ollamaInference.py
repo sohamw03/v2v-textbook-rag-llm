@@ -21,14 +21,16 @@ from langchain_community.llms import Ollama
 
 os.environ["OPENAI_API_KEY"] = str(os.getenv("OPENAI_API_KEY"))
 
-model = Ollama(model="yozu-gemma:2b")
+model = Ollama(model="phi3")
 
 
 def ollamaInference(query, userLanguage, isNewSession) -> str:
     # query = translate(userLanguage, "en", query)
 
     vectorstore = FAISS.load_local(
-        "../../vectorstore", OpenAIEmbeddings(), allow_dangerous_deserialization=True
+        "../../schand_vectorstore",
+        OpenAIEmbeddings(),
+        allow_dangerous_deserialization=True,
     )
 
     retriever = vectorstore.as_retriever()
@@ -82,10 +84,12 @@ def ollamaInference(query, userLanguage, isNewSession) -> str:
 
 if __name__ == "__main__":
     while True:
-        query = str(input("> ")) or "Can you give the answer to exercises question 2 ?"
+        query = (
+            str(input(">>> ")) or "Can you give the answer to exercises question 2 ?"
+        )
         if query == "/q":
             break
         # for chunks in ollamaInference(query, "en", 0):
         #     print(chunks, end="")
         ollamaInference(query, "en", 0)
-        print("\n\n")
+        print()

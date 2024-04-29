@@ -25,7 +25,7 @@ container_client = blob_service_client.get_container_client("ncert-extraction-st
 print("\nListing blobs...")
 
 # List the blobs in the container
-blob_list = container_client.list_blobs()
+blob_list = container_client.list_blobs(name_starts_with="schand_vectorstore/")
 for blob in blob_list:
     print("\t" + blob.name)
 
@@ -33,7 +33,7 @@ try:
     # Create the local vectorstore folder (if it doesn't exist)
     os.makedirs("schand_vectorstore", exist_ok=True)
 
-    for blob in container_client.list_blobs(prefix="schand_vectorstore/"):
+    for blob in container_client.list_blobs(name_starts_with="schand_vectorstore/"):
         # Extract the filename from the blob name (assuming simple structure)
         filename = blob.name.split("/")[-1]
         local_path = os.path.join(
