@@ -30,7 +30,8 @@ def chatllm(request):
 
         # Retrieve the audio file from the request
         audio_file = request.FILES.get("audio")
-        isNewSession = request.POST.get("isNewSession", 0)
+        # isNewSession = request.POST.get("isNewSession", 0)
+        isNewSession = 0
 
         # Process the audio file
         detectedText = speechToText(audio_file)
