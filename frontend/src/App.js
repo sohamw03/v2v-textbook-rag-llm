@@ -122,7 +122,7 @@ export default function App() {
     formData.append("audio", blob, filename);
     formData.append("isNewSession", isNewSession ? 1 : 0);
 
-    // fetch("https://yozu-speech-services.azurewebsites.net/chat", {
+    // fetch("https://vtv-speech-services.azurewebsites.net/chat", {
     fetch("http://127.0.0.1:8000/chat", {
       method: "POST",
       body: formData,

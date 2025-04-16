@@ -16,7 +16,7 @@ from translate import translate
 from dbparsers.getParsedChatHistory import getParsedChatHistory
 
 # from models import Chat
-from prompts import yozu_prompts
+from prompts import vtv_prompts
 from langchain_community.llms import Ollama
 
 os.environ["OPENAI_API_KEY"] = str(os.getenv("OPENAI_API_KEY"))
@@ -35,10 +35,10 @@ def ollamaInference(query, userLanguage, isNewSession) -> str:
 
     retriever = vectorstore.as_retriever()
 
-    human_template = yozu_prompts["new_session" if isNewSession == 1 else "default"][
+    human_template = vtv_prompts["new_session" if isNewSession == 1 else "default"][
         "human_template"
     ]
-    system_prompt = yozu_prompts["new_session" if isNewSession == 1 else "default"][
+    system_prompt = vtv_prompts["new_session" if isNewSession == 1 else "default"][
         "system_prompt"
     ]
 
@@ -46,7 +46,7 @@ def ollamaInference(query, userLanguage, isNewSession) -> str:
     system_message_prompt = SystemMessagePromptTemplate.from_template(system_prompt)
     human_template = """Answer the question based only on the following context:
     {context}
-    
+
     Question: {question}"""
     human_message_prompt = HumanMessagePromptTemplate.from_template(human_template)
     chat_prompt = ChatPromptTemplate.from_messages(

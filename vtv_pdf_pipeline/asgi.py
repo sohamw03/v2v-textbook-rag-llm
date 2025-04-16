@@ -1,5 +1,5 @@
 """
-ASGI config for yozu_pdf_pipeline project.
+ASGI config for vtv_pdf_pipeline project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "yozu_pdf_pipeline.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "vtv_pdf_pipeline.settings")
 
 application = get_asgi_application()

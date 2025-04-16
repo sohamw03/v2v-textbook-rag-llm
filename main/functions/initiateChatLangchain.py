@@ -15,7 +15,7 @@ from azure.storage.blob import BlobServiceClient
 from .translate import translate
 from .dbparsers.getParsedChatHistory import getParsedChatHistory
 from main.models import Chat
-from .prompts import yozu_prompts
+from .prompts import vtv_prompts
 
 os.environ["OPENAI_API_KEY"] = str(os.getenv("OPENAI_API_KEY"))
 CONN_STR = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
@@ -59,10 +59,10 @@ retriever = vectorstore.as_retriever(search_kwargs={"k": 5})
 def initiateChatLangchain(query, userLanguage, isNewSession) -> str:
     query = translate(userLanguage, "en", query)
 
-    human_template = yozu_prompts["new_session" if isNewSession == 1 else "default"][
+    human_template = vtv_prompts["new_session" if isNewSession == 1 else "default"][
         "human_template"
     ]
-    system_prompt = yozu_prompts["new_session" if isNewSession == 1 else "default"][
+    system_prompt = vtv_prompts["new_session" if isNewSession == 1 else "default"][
         "system_prompt"
     ]
 

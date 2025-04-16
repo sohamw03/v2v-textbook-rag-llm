@@ -9,7 +9,7 @@ from langchain_core.prompts import (
 )
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from .translate import translate
-from .prompts import yozu_prompts
+from .prompts import vtv_prompts
 
 os.environ["OPENAI_API_KEY"] = str(os.getenv("OPENAI_API_KEY"))
 
@@ -17,8 +17,8 @@ os.environ["OPENAI_API_KEY"] = str(os.getenv("OPENAI_API_KEY"))
 def initiateChatDictionaryLangchain(query, userLanguage) -> str:
     query = translate(userLanguage, "en", query)
 
-    human_template = yozu_prompts["dictionary_mode"]["human_template"]
-    system_prompt = yozu_prompts["dictionary_mode"]["system_prompt"]
+    human_template = vtv_prompts["dictionary_mode"]["human_template"]
+    system_prompt = vtv_prompts["dictionary_mode"]["system_prompt"]
 
     system_message_prompt = SystemMessagePromptTemplate.from_template(system_prompt)
     human_message_prompt = HumanMessagePromptTemplate.from_template(human_template)

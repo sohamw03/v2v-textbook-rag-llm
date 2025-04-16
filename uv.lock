@@ -1282,7 +1282,7 @@ wheels = [
 ]
 
 [[package]]
-name = "yozu-pdf-pipeline"
+name = "vtv-pdf-pipeline"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
